@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1iqe5qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="10.2.1">
+  <bpmn:extensionElements />
+  <bpmn:process id="NATS_demoMsgStartThrow" name="NATS_demoMsgStartThrow" isExecutable="true">
+    <bpmn:startEvent id="Event_1jkfjps">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property />
+          <zeebe:property />
+          <zeebe:property />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0dwf46l</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1b8g9o7" messageRef="Message_075vkqf" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_08jb08h">
+      <bpmn:incoming>Flow_06pj0ka</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_06pj0ka" sourceRef="M_ADD_materialActual" targetRef="Event_08jb08h" />
+    <bpmn:serviceTask id="M_ADD_materialActual" name="Add material actual" zeebe:modelerTemplate="libre.bpmn.graphql-mutation" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; xmlns:xlink=&#39;http://www.w3.org/1999/xlink&#39; version=&#39;1.1&#39; id=&#39;GraphQL_Logo&#39; x=&#39;0px&#39; y=&#39;0px&#39; viewBox=&#39;0 0 400 400&#39; enable-background=&#39;new 0 0 400 400&#39; xml:space=&#39;preserve&#39;%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;122&#39; y=&#39;-0.4&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 163.3196 363.3136)&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;320.3&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;39.8&#39; y=&#39;272.2&#39; fill=&#39;%23E535AB&#39; width=&#39;320.3&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;37.9&#39; y=&#39;312.2&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 83.0693 663.3409)&#39; fill=&#39;%23E535AB&#39; width=&#39;185&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;177.1&#39; y=&#39;71.1&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 463.3409 283.0693)&#39; fill=&#39;%23E535AB&#39; width=&#39;185&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;122.1&#39; y=&#39;-13&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 126.7903 232.1221)&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;109.6&#39; y=&#39;151.6&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 266.0828 473.3766)&#39; fill=&#39;%23E535AB&#39; width=&#39;320.3&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;52.5&#39; y=&#39;107.5&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;330.9&#39; y=&#39;107.5&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;262.4&#39; y=&#39;240.1&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 126.7953 714.2875)&#39; fill=&#39;%23E535AB&#39; width=&#39;14.5&#39; height=&#39;160.9&#39;/%3E%3C/g%3E%3C/g%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M369.5,297.9c-9.6,16.7-31,22.4-47.7,12.8c-16.7-9.6-22.4-31-12.8-47.7c9.6-16.7,31-22.4,47.7-12.8 C373.5,259.9,379.2,281.2,369.5,297.9&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M90.9,137c-9.6,16.7-31,22.4-47.7,12.8c-16.7-9.6-22.4-31-12.8-47.7c9.6-16.7,31-22.4,47.7-12.8 C94.8,99,100.5,120.3,90.9,137&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M30.5,297.9c-9.6-16.7-3.9-38,12.8-47.7c16.7-9.6,38-3.9,47.7,12.8c9.6,16.7,3.9,38-12.8,47.7 C61.4,320.3,40.1,314.6,30.5,297.9&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M309.1,137c-9.6-16.7-3.9-38,12.8-47.7c16.7-9.6,38-3.9,47.7,12.8c9.6,16.7,3.9,38-12.8,47.7 C340.1,159.4,318.7,153.7,309.1,137&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M200,395.8c-19.3,0-34.9-15.6-34.9-34.9c0-19.3,15.6-34.9,34.9-34.9c19.3,0,34.9,15.6,34.9,34.9 C234.9,380.1,219.3,395.8,200,395.8&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M200,74c-19.3,0-34.9-15.6-34.9-34.9c0-19.3,15.6-34.9,34.9-34.9c19.3,0,34.9,15.6,34.9,34.9 C234.9,58.4,219.3,74,200,74&#39;/%3E%3C/g%3E%3C/svg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="graphql-mutation" />
+        <zeebe:ioMapping>
+          <zeebe:input source="mutation createMaterial($input: [AddMaterialActualInput!]!, $upsert: Boolean){&#10;  addMaterialActual(input: $input, upsert: $upsert) {&#10;    materialActual {&#10;      id&#10;      quantity&#10;      quantityUoM {&#10;        id&#10;      }&#10;    }&#10;  }&#10;}" target="query" />
+          <zeebe:input source="={&#10;  &#34;input&#34;: [&#10;    {&#10;      &#34;id&#34;: &#34;new_stuff_&#34; &#38; $.id,&#10;      &#34;quantity&#34;: $.quantity,&#10;      &#34;quantityUoM&#34;: {&#10;        &#34;id&#34;: &#34;grams&#34;&#10;      }&#10;    }&#10;  ],&#10;  &#34;upsert&#34;: true&#10;}" target="variables" />
+          <zeebe:input source="20000" target="timeout" />
+          <zeebe:input source="10000" target="maxPayloadSize" />
+          <zeebe:input source="*" target="responseTransformExpression" />
+          <zeebe:output source="= response" target="response" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0b3j70n</bpmn:incoming>
+      <bpmn:outgoing>Flow_06pj0ka</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0p0kibm">
+      <bpmn:incoming>Flow_0dwf46l</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b3j70n</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1n4oxpg</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1x5qt38</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0b3j70n" name="default" sourceRef="Gateway_0p0kibm" targetRef="M_ADD_materialActual">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" />
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0dwf46l" sourceRef="Event_1jkfjps" targetRef="Gateway_0p0kibm" />
+    <bpmn:sequenceFlow id="Flow_1n4oxpg" name="quantity &#62; 100" sourceRef="Gateway_0p0kibm" targetRef="MSG_tooMuch">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=$.quantity &gt; 100</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateThrowEvent id="MSG_tooMuch" name="MSG_tooMuch">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="={&#34;alert&#34;:&#34;too many&#34;}" target="BODY" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1n4oxpg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jdundc</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1dz493e" messageRef="Message_05njb8n" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1jdundc" sourceRef="MSG_tooMuch" targetRef="Event_1g91g04" />
+    <bpmn:endEvent id="Event_1g91g04">
+      <bpmn:incoming>Flow_1jdundc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1x5qt38" name="quantity &#60; 50" sourceRef="Gateway_0p0kibm" targetRef="MSG_tooFew">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=$.quantity &lt; 50</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateThrowEvent id="MSG_tooFew" name="MSG_tooFew">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="={&#34;alert&#34;:&#34;too few&#34;}" target="BODY" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1x5qt38</bpmn:incoming>
+      <bpmn:outgoing>Flow_05j7fca</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1cecxaj" messageRef="Message_05njb8n" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="Event_1oo7q6r">
+      <bpmn:incoming>Flow_05j7fca</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_05j7fca" sourceRef="MSG_tooFew" targetRef="Event_1oo7q6r" />
+    <bpmn:textAnnotation id="TextAnnotation_08nxsar">
+      <bpmn:text>send alert</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1cm64gs" sourceRef="MSG_tooMuch" targetRef="TextAnnotation_08nxsar" />
+  </bpmn:process>
+  <bpmn:message id="Message_075vkqf" name="material/stuff" />
+  <bpmn:message id="Message_05njb8n" name="material/alerts" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="NATS_demoMsgStartThrow">
+      <bpmndi:BPMNShape id="Event_1dumel3_di" bpmnElement="Event_1jkfjps">
+        <dc:Bounds x="192" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08jb08h_di" bpmnElement="Event_08jb08h">
+        <dc:Bounds x="622" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19946wl_di" bpmnElement="M_ADD_materialActual">
+        <dc:Bounds x="420" y="350" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0p0kibm_di" bpmnElement="Gateway_0p0kibm" isMarkerVisible="true">
+        <dc:Bounds x="295" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1c1idrp_di" bpmnElement="MSG_tooMuch">
+        <dc:Bounds x="452" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="430" y="63" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1g91g04_di" bpmnElement="Event_1g91g04">
+        <dc:Bounds x="622" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bfa155_di" bpmnElement="MSG_tooFew">
+        <dc:Bounds x="452" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="435" y="275" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1oo7q6r_di" bpmnElement="Event_1oo7q6r">
+        <dc:Bounds x="612" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_08nxsar_di" bpmnElement="TextAnnotation_08nxsar">
+        <dc:Bounds x="420" y="160" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_06pj0ka_di" bpmnElement="Flow_06pj0ka">
+        <di:waypoint x="520" y="390" />
+        <di:waypoint x="622" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b3j70n_di" bpmnElement="Flow_0b3j70n">
+        <di:waypoint x="320" y="275" />
+        <di:waypoint x="320" y="390" />
+        <di:waypoint x="420" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="331" y="363" width="37" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dwf46l_di" bpmnElement="Flow_0dwf46l">
+        <di:waypoint x="228" y="250" />
+        <di:waypoint x="295" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n4oxpg_di" bpmnElement="Flow_1n4oxpg">
+        <di:waypoint x="320" y="225" />
+        <di:waypoint x="320" y="100" />
+        <di:waypoint x="452" y="100" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="348" y="82" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jdundc_di" bpmnElement="Flow_1jdundc">
+        <di:waypoint x="488" y="100" />
+        <di:waypoint x="622" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x5qt38_di" bpmnElement="Flow_1x5qt38">
+        <di:waypoint x="345" y="250" />
+        <di:waypoint x="452" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="363" y="232" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05j7fca_di" bpmnElement="Flow_05j7fca">
+        <di:waypoint x="488" y="250" />
+        <di:waypoint x="612" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1cm64gs_di" bpmnElement="Association_1cm64gs">
+        <di:waypoint x="470" y="118" />
+        <di:waypoint x="470" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
