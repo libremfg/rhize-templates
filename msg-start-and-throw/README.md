@@ -1,5 +1,8 @@
 # Demo of a message start and throw
 
+![image](https://github.com/libremfg/bpmn-templates/assets/47385188/349e70ad-212b-4594-87bb-9f6d1406140f)
+
+
 This workflow is triggered from a message on `material/stuff` on the Rhize NATS broker.
 You can also publish from an MQTT client and the Rhize agent will bridge the message.
 
