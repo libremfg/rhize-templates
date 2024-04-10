@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1iqe5qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="10.2.1">
+  <bpmn:extensionElements />
+  <bpmn:process id="API_demo_custom_response" isExecutable="true">
+    <bpmn:startEvent id="Event_011xixo">
+      <bpmn:outgoing>Flow_1eefaa4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1eefaa4" sourceRef="Event_011xixo" targetRef="Activity_1samigh" />
+    <bpmn:endEvent id="Event_013h2j5">
+      <bpmn:incoming>Flow_16gw35s</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1samigh" name="J_INIT_customResponse" zeebe:modelerTemplate="libre.bpmn.jsonata-transform" zeebe:modelerTemplateVersion="2">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="jsonata" />
+        <zeebe:ioMapping>
+          <zeebe:input source="= $" target="input" />
+          <zeebe:input source="&#34;Good news: &#34; &#38; $.input.message" target="transform" />
+          <zeebe:input source="10000" target="maxPayloadSize" />
+          <zeebe:output source="= response" target="customResponse" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header />
+        </zeebe:taskHeaders>
+        <zeebe:properties>
+          <zeebe:property />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1eefaa4</bpmn:incoming>
+      <bpmn:outgoing>Flow_16gw35s</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_16gw35s" sourceRef="Activity_1samigh" targetRef="Event_013h2j5" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="API_demo_custom_response">
+      <bpmndi:BPMNShape id="Event_011xixo_di" bpmnElement="Event_011xixo">
+        <dc:Bounds x="402" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_013h2j5_di" bpmnElement="Event_013h2j5">
+        <dc:Bounds x="862" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dlot5h_di" bpmnElement="Activity_1samigh">
+        <dc:Bounds x="560" y="230" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1eefaa4_di" bpmnElement="Flow_1eefaa4">
+        <di:waypoint x="437" y="270" />
+        <di:waypoint x="560" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16gw35s_di" bpmnElement="Flow_16gw35s">
+        <di:waypoint x="660" y="270" />
+        <di:waypoint x="862" y="270" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
