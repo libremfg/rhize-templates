@@ -1,6 +1,5 @@
 # Demo of a message start and throw
 
-
 This workflow is triggered from a message on `material/stuff` on the Rhize NATS broker.
 You can also publish from an MQTT client and the Rhize agent will bridge the message.
 
