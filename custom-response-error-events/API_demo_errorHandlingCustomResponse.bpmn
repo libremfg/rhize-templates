@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1iqe5qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="10.2.1">
+  <bpmn:extensionElements />
+  <bpmn:process id="API_demo_errorHandlingCustomResponse" isExecutable="true">
+    <bpmn:startEvent id="Event_1cy8294">
+      <bpmn:outgoing>Flow_0m9syaa</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_00llfqn">
+      <bpmn:incoming>Flow_0m9syaa</bpmn:incoming>
+      <bpmn:outgoing>Flow_0en7le4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0w0wo2p</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0m9syaa" sourceRef="Event_1cy8294" targetRef="Gateway_00llfqn" />
+    <bpmn:endEvent id="Event_18ni8iq">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Workflow ran correctly&#34;&#10;" target="customResponse" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0en7le4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0en7le4" name="CORRECT?" sourceRef="Gateway_00llfqn" targetRef="Event_18ni8iq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$.input.message = "CORRECT"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_0ce1e6m" name="ERROR event">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=&#34;Workflow ended in error&#34;" target="customResponse" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w0wo2p</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0w0wo2p" name="Else" sourceRef="Gateway_00llfqn" targetRef="Event_0ce1e6m" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="API_demo_errorHandlingCustomResponse">
+      <bpmndi:BPMNShape id="Event_1cy8294_di" bpmnElement="Event_1cy8294">
+        <dc:Bounds x="322" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00llfqn_di" bpmnElement="Gateway_00llfqn" isMarkerVisible="true">
+        <dc:Bounds x="435" y="235" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18ni8iq_di" bpmnElement="Event_18ni8iq">
+        <dc:Bounds x="632" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ce1e6m_di" bpmnElement="Event_0ce1e6m">
+        <dc:Bounds x="632" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="612" y="395" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0m9syaa_di" bpmnElement="Flow_0m9syaa">
+        <di:waypoint x="358" y="260" />
+        <di:waypoint x="435" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0en7le4_di" bpmnElement="Flow_0en7le4">
+        <di:waypoint x="485" y="260" />
+        <di:waypoint x="632" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="517" y="242" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w0wo2p_di" bpmnElement="Flow_0w0wo2p">
+        <di:waypoint x="460" y="285" />
+        <di:waypoint x="460" y="370" />
+        <di:waypoint x="632" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="353" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
