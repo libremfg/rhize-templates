@@ -53,19 +53,22 @@ This returns a data set like this:
 
 ```
 
-The service task filters this data with the JSONata input expression
+The service task filters this data with the JSONata input expression:
 
- ```javascript
- events.{
+```javascript
+$exists(events[0])
+    ? events.{
     "id":id,
     "link":link,
     "category":categories.title,
     "time":geometries.date
     }
- 
- ```
 
- Which maps the data as follows:
+   : "No earth events lately" 
+```
+
+If Earth events have happened in the specified number of days,
+the expression maps the data to custom response as follows:
 
 ```JSONata
 "customResponse": {
