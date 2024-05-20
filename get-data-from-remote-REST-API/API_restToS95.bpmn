@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1iqe5qx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="10.2.1">
+  <bpmn:extensionElements />
+  <bpmn:process id="API_restToS95" isExecutable="true">
+    <bpmn:startEvent id="Event_0lsohis">
+      <bpmn:outgoing>Flow_1p1xzy7</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1p1xzy7" sourceRef="Event_0lsohis" targetRef="REST_GET_earthEvents" />
+    <bpmn:serviceTask id="REST_GET_earthEvents" name="REST&#10;GET_earthEvents&#10;" zeebe:modelerTemplate="libre.bpmn.rest-api" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2018%2018%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M17.0335%208.99997C17.0335%2013.4475%2013.4281%2017.0529%208.98065%2017.0529C4.53316%2017.0529%200.927765%2013.4475%200.927765%208.99997C0.927765%204.55248%204.53316%200.947083%208.98065%200.947083C13.4281%200.947083%2017.0335%204.55248%2017.0335%208.99997Z%22%20fill%3D%22%23505562%22%2F%3E%0A%3Cpath%20d%3D%22M4.93126%2014.1571L6.78106%203.71471H10.1375C11.1917%203.71471%2011.9824%203.98323%2012.5095%204.52027C13.0465%205.04736%2013.315%205.73358%2013.315%206.57892C13.315%207.44414%2013.0714%208.15522%2012.5841%208.71215C12.1067%209.25913%2011.4553%209.63705%2010.6298%209.8459L12.0619%2014.1571H10.3315L9.03364%2010.0249H7.24351L6.51254%2014.1571H4.93126ZM7.49711%208.59281H9.24248C9.99832%208.59281%2010.5901%208.42374%2011.0177%208.08561C11.4553%207.73753%2011.6741%207.26513%2011.6741%206.66842C11.6741%206.19106%2011.5249%205.81811%2011.2265%205.54959C10.9282%205.27113%2010.4558%205.1319%209.80936%205.1319H8.10874L7.49711%208.59281Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E%0A">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="rest-api" />
+        <zeebe:ioMapping>
+          <zeebe:input source="GET" target="type" />
+          <zeebe:input source="https://eonet.gsfc.nasa.gov/api/v3/events" target="url" />
+          <zeebe:input source="20000" target="timeout" />
+          <zeebe:input source="1000000" target="maxPayloadSize" />
+          <zeebe:input source="(&#10;$count(events[0]) &#62; 0&#10;&#10;    ? events.{&#10;    &#34;id&#34;: &#34;hello_youtube_&#34; &#38; id,&#10;    &#34;description&#34;:title,&#10;    &#34;category&#34;:categories.title,&#10;    &#34;recordTimestamp&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveStart&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveEnd&#34;: $sort(geometry.date)[$count(geometry.date)-1],&#10;    &#34;source&#34;: sources.id &#38; &#34; &#34; &#38; sources.url,&#10;    &#34;operationsEventDefinition&#34;: {&#10;        &#34;id&#34;: &#34;Earth event&#34;,&#10;        &#34;label&#34;: &#34;Earth event&#34;&#10;        }&#10;    }&#10;&#10;    : {&#34;message&#34;:&#34;No earth events lately&#34;}&#10;&#10;)&#10;" target="responseTransformExpression" />
+          <zeebe:input source="true" target="tls-verification" />
+          <zeebe:output source="= response" target="REST_GET_earthEvents" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1p1xzy7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cycznb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="M_addOperationsEvents" name="M_addOperationsEvents" zeebe:modelerTemplate="libre.bpmn.graphql-mutation" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; xmlns:xlink=&#39;http://www.w3.org/1999/xlink&#39; version=&#39;1.1&#39; id=&#39;GraphQL_Logo&#39; x=&#39;0px&#39; y=&#39;0px&#39; viewBox=&#39;0 0 400 400&#39; enable-background=&#39;new 0 0 400 400&#39; xml:space=&#39;preserve&#39;%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;122&#39; y=&#39;-0.4&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 163.3196 363.3136)&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;320.3&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;39.8&#39; y=&#39;272.2&#39; fill=&#39;%23E535AB&#39; width=&#39;320.3&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;37.9&#39; y=&#39;312.2&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 83.0693 663.3409)&#39; fill=&#39;%23E535AB&#39; width=&#39;185&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;177.1&#39; y=&#39;71.1&#39; transform=&#39;matrix(-0.866 -0.5 0.5 -0.866 463.3409 283.0693)&#39; fill=&#39;%23E535AB&#39; width=&#39;185&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;122.1&#39; y=&#39;-13&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 126.7903 232.1221)&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;109.6&#39; y=&#39;151.6&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 266.0828 473.3766)&#39; fill=&#39;%23E535AB&#39; width=&#39;320.3&#39; height=&#39;16.6&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;52.5&#39; y=&#39;107.5&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;330.9&#39; y=&#39;107.5&#39; fill=&#39;%23E535AB&#39; width=&#39;16.6&#39; height=&#39;185&#39;/%3E%3C/g%3E%3C/g%3E%3Cg%3E%3Cg%3E%3Crect x=&#39;262.4&#39; y=&#39;240.1&#39; transform=&#39;matrix(-0.5 -0.866 0.866 -0.5 126.7953 714.2875)&#39; fill=&#39;%23E535AB&#39; width=&#39;14.5&#39; height=&#39;160.9&#39;/%3E%3C/g%3E%3C/g%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M369.5,297.9c-9.6,16.7-31,22.4-47.7,12.8c-16.7-9.6-22.4-31-12.8-47.7c9.6-16.7,31-22.4,47.7-12.8 C373.5,259.9,379.2,281.2,369.5,297.9&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M90.9,137c-9.6,16.7-31,22.4-47.7,12.8c-16.7-9.6-22.4-31-12.8-47.7c9.6-16.7,31-22.4,47.7-12.8 C94.8,99,100.5,120.3,90.9,137&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M30.5,297.9c-9.6-16.7-3.9-38,12.8-47.7c16.7-9.6,38-3.9,47.7,12.8c9.6,16.7,3.9,38-12.8,47.7 C61.4,320.3,40.1,314.6,30.5,297.9&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M309.1,137c-9.6-16.7-3.9-38,12.8-47.7c16.7-9.6,38-3.9,47.7,12.8c9.6,16.7,3.9,38-12.8,47.7 C340.1,159.4,318.7,153.7,309.1,137&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M200,395.8c-19.3,0-34.9-15.6-34.9-34.9c0-19.3,15.6-34.9,34.9-34.9c19.3,0,34.9,15.6,34.9,34.9 C234.9,380.1,219.3,395.8,200,395.8&#39;/%3E%3Cpath fill=&#39;%23E535AB&#39; d=&#39;M200,74c-19.3,0-34.9-15.6-34.9-34.9c0-19.3,15.6-34.9,34.9-34.9c19.3,0,34.9,15.6,34.9,34.9 C234.9,58.4,219.3,74,200,74&#39;/%3E%3C/g%3E%3C/svg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="graphql-mutation" />
+        <zeebe:ioMapping>
+          <zeebe:input source="mutation AddOperationsEvent($input: [AddOperationsEventInput!]!) {&#10;  addOperationsEvent(input: $input) {&#10;    operationsEvent {&#10;      id&#10;      source&#10;    }&#10;  }&#10;}" target="query" />
+          <zeebe:input source="={&#10;  &#34;upsert&#34;: true,&#10;  &#34;input&#34;: $.REST_GET_earthEvents&#10;}" target="variables" />
+          <zeebe:input source="20000" target="timeout" />
+          <zeebe:input source="1000000" target="maxPayloadSize" />
+          <zeebe:input source="*" target="responseTransformExpression" />
+          <zeebe:output source="= response" target="customResponse" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1cycznb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rdrpk9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1lnt649">
+      <bpmn:incoming>Flow_1rdrpk9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1rdrpk9" sourceRef="M_addOperationsEvents" targetRef="Event_1lnt649" />
+    <bpmn:sequenceFlow id="Flow_1cycznb" name="variable" sourceRef="REST_GET_earthEvents" targetRef="M_addOperationsEvents" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="API_restToS95">
+      <bpmndi:BPMNShape id="Event_0lsohis_di" bpmnElement="Event_0lsohis">
+        <dc:Bounds x="162" y="52" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n4c93t_di" bpmnElement="REST_GET_earthEvents">
+        <dc:Bounds x="330" y="30" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h96tak_di" bpmnElement="M_addOperationsEvents">
+        <dc:Bounds x="630" y="20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lnt649_di" bpmnElement="Event_1lnt649">
+        <dc:Bounds x="862" y="52" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1p1xzy7_di" bpmnElement="Flow_1p1xzy7">
+        <di:waypoint x="198" y="70" />
+        <di:waypoint x="330" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rdrpk9_di" bpmnElement="Flow_1rdrpk9">
+        <di:waypoint x="730" y="70" />
+        <di:waypoint x="862" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cycznb_di" bpmnElement="Flow_1cycznb">
+        <di:waypoint x="430" y="70" />
+        <di:waypoint x="630" y="70" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="509" y="52" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
