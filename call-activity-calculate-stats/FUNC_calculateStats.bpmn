@@ -3,9 +3,8 @@
   <bpmn:extensionElements />
   <bpmn:process id="FUNC_calculateStats" isExecutable="true">
     <bpmn:startEvent id="Event_0fofnwp">
-      <bpmn:outgoing>Flow_181ntja</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0i45v3h</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_181ntja" sourceRef="Event_0fofnwp" targetRef="Activity_0l6yn8e" />
     <bpmn:endEvent id="Event_00csw4v">
       <bpmn:incoming>Flow_124wtbe</bpmn:incoming>
     </bpmn:endEvent>
@@ -20,14 +19,40 @@
           <zeebe:output source="= response" target="customResponse" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_181ntja</bpmn:incoming>
+      <bpmn:incoming>Flow_1yw57gb</bpmn:incoming>
       <bpmn:outgoing>Flow_124wtbe</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_092lc57" name="SCHEMA_arrOfNum" zeebe:modelerTemplate="libre.bpmn.json-schema-node" zeebe:modelerTemplateVersion="2">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="json-schema" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{   &#34;$schema&#34;: &#34;http://json-schema.org/draft-07/schema#&#34;,   &#34;title&#34;: &#34;Generated schema for Root&#34;,   &#34;type&#34;: &#34;object&#34;,   &#34;properties&#34;: {     &#34;arr&#34;: {       &#34;type&#34;: &#34;array&#34;,       &#34;items&#34;: {         &#34;type&#34;: &#34;number&#34;       }     }   },   &#34;required&#34;: [     &#34;arr&#34;   ] }" target="schema" />
+          <zeebe:output source="= valid" target="valid" />
+          <zeebe:output source="= validationError" target="customResponse" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0i45v3h</bpmn:incoming>
+      <bpmn:outgoing>Flow_05d4ps5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0i45v3h" sourceRef="Event_0fofnwp" targetRef="Activity_092lc57" />
+    <bpmn:exclusiveGateway id="Gateway_0scj97z">
+      <bpmn:incoming>Flow_05d4ps5</bpmn:incoming>
+      <bpmn:outgoing>Flow_03yc9wz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1yw57gb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_040a2oh">
+      <bpmn:incoming>Flow_03yc9wz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03yc9wz" name="invalid?" sourceRef="Gateway_0scj97z" targetRef="Event_040a2oh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$not(valid)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_05d4ps5" sourceRef="Activity_092lc57" targetRef="Gateway_0scj97z" />
+    <bpmn:sequenceFlow id="Flow_1yw57gb" sourceRef="Gateway_0scj97z" targetRef="Activity_0l6yn8e" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="FUNC_calculateStats">
       <bpmndi:BPMNShape id="Event_0fofnwp_di" bpmnElement="Event_0fofnwp">
-        <dc:Bounds x="362" y="182" width="36" height="36" />
+        <dc:Bounds x="32" y="182" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_00csw4v_di" bpmnElement="Event_00csw4v">
         <dc:Bounds x="602" y="182" width="36" height="36" />
@@ -36,13 +61,38 @@
         <dc:Bounds x="450" y="160" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_181ntja_di" bpmnElement="Flow_181ntja">
-        <di:waypoint x="398" y="200" />
-        <di:waypoint x="450" y="200" />
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_02m1tzd_di" bpmnElement="Activity_092lc57">
+        <dc:Bounds x="190" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0scj97z_di" bpmnElement="Gateway_0scj97z" isMarkerVisible="true">
+        <dc:Bounds x="335" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_040a2oh_di" bpmnElement="Event_040a2oh">
+        <dc:Bounds x="342" y="452" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_124wtbe_di" bpmnElement="Flow_124wtbe">
         <di:waypoint x="550" y="200" />
         <di:waypoint x="602" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i45v3h_di" bpmnElement="Flow_0i45v3h">
+        <di:waypoint x="68" y="200" />
+        <di:waypoint x="190" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03yc9wz_di" bpmnElement="Flow_03yc9wz">
+        <di:waypoint x="360" y="225" />
+        <di:waypoint x="360" y="452" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="379" y="345" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05d4ps5_di" bpmnElement="Flow_05d4ps5">
+        <di:waypoint x="290" y="200" />
+        <di:waypoint x="335" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yw57gb_di" bpmnElement="Flow_1yw57gb">
+        <di:waypoint x="385" y="200" />
+        <di:waypoint x="450" y="200" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

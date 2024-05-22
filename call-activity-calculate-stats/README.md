@@ -24,8 +24,11 @@ For details, read [Trigger workflows](https://docs.rhize.com/how-to/bpmn/trigger
 ![Diagram showing a call activity](https://raw.githubusercontent.com/libremfg/rhize-docs/main/static/images/bpmn/diagram-rhize-bpmn-call-activity.png)
 
 The function expects an array of numbers called `arr`.
+This data is validated with the [JSON schema task](https://docs.rhize.com/how-to/bpmn/bpmn-elements/#json-schema).
 The main workflow extracts this array from a `data` object that it receives in the payload of a message or API call.
+If `data.arr` does not exist or is not an array of numbers, the workflow returns a message about the invalid schema.
 
+If `data.arr` has a valid type, the called function calculates statistics.
 After the function returns the calculated values, the main workflow stores the result in a new variable, `stats`, and sends this variable to `stats/calculated` on the Rhize broker.
 If `stats.mode` exceeds `200`, it also includes an alert property in the payload.
 
