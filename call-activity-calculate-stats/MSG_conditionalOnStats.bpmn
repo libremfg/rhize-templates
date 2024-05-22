@@ -26,20 +26,21 @@
       <bpmn:outgoing>Flow_05p5wm4</bpmn:outgoing>
       <bpmn:outgoing>Flow_1djyaqi</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:intermediateThrowEvent id="Event_06wasbv">
+    <bpmn:intermediateThrowEvent id="MSG_statsNormal">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="=$.stats" target="BODY" />
+          <zeebe:output source="=BODY" target="customResponse" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1djyaqi</bpmn:incoming>
       <bpmn:outgoing>Flow_0h1z46x</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_148u002" messageRef="Message_1jisf8s" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_05p5wm4" name="Mode exceeds 200" sourceRef="Gateway_1fx8lse" targetRef="Event_15hlwc7">
+    <bpmn:sequenceFlow id="Flow_05p5wm4" name="Mode exceeds 200" sourceRef="Gateway_1fx8lse" targetRef="MSG_statsAbnormal">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$.stats.mode &gt; 200</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:intermediateThrowEvent id="Event_15hlwc7">
+    <bpmn:intermediateThrowEvent id="MSG_statsAbnormal">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="=$merge([$.stats, {&#34;alert&#34;: &#34;Max exceeds 200&#34;}])" target="BODY" />
@@ -49,9 +50,9 @@
       <bpmn:outgoing>Flow_0ulyvvi</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_14h7490" messageRef="Message_24lv77f" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_1djyaqi" name="default" sourceRef="Gateway_1fx8lse" targetRef="Event_06wasbv" />
-    <bpmn:sequenceFlow id="Flow_0ulyvvi" sourceRef="Event_15hlwc7" targetRef="Event_0ns5pa6" />
-    <bpmn:sequenceFlow id="Flow_0h1z46x" sourceRef="Event_06wasbv" targetRef="Event_0ns5pa6" />
+    <bpmn:sequenceFlow id="Flow_1djyaqi" name="default" sourceRef="Gateway_1fx8lse" targetRef="MSG_statsNormal" />
+    <bpmn:sequenceFlow id="Flow_0ulyvvi" sourceRef="MSG_statsAbnormal" targetRef="Event_0ns5pa6" />
+    <bpmn:sequenceFlow id="Flow_0h1z46x" sourceRef="MSG_statsNormal" targetRef="Event_0ns5pa6" />
     <bpmn:sequenceFlow id="Flow_1s2cj2c" name="pass stats" sourceRef="call" targetRef="Gateway_1fx8lse" />
     <bpmn:sequenceFlow id="Flow_17k3b9k" sourceRef="Event_19vkcy6" targetRef="call" />
   </bpmn:process>
@@ -79,10 +80,10 @@
       <bpmndi:BPMNShape id="Gateway_1fx8lse_di" bpmnElement="Gateway_1fx8lse" isMarkerVisible="true">
         <dc:Bounds x="735" y="285" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_00b60j3_di" bpmnElement="Event_06wasbv">
+      <bpmndi:BPMNShape id="Event_00b60j3_di" bpmnElement="MSG_statsNormal">
         <dc:Bounds x="902" y="292" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1rq0ado_di" bpmnElement="Event_15hlwc7">
+      <bpmndi:BPMNShape id="Event_1rq0ado_di" bpmnElement="MSG_statsAbnormal">
         <dc:Bounds x="902" y="422" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_05p5wm4_di" bpmnElement="Flow_05p5wm4">
