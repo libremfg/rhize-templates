@@ -11,10 +11,10 @@
         <zeebe:taskDefinition type="rest-api" />
         <zeebe:ioMapping>
           <zeebe:input source="GET" target="type" />
-          <zeebe:input source="https://eonet.gsfc.nasa.gov/api/v3/events" target="url" />
+          <zeebe:input source="https://eonet.gsfc.nasa.gov/api/v3/events?days=10" target="url" />
           <zeebe:input source="20000" target="timeout" />
-          <zeebe:input source="1000000" target="maxPayloadSize" />
-          <zeebe:input source="(&#10;$count(events[0]) &#62; 0&#10;&#10;    ? events.{&#10;    &#34;id&#34;: &#34;hello_youtube_&#34; &#38; id,&#10;    &#34;description&#34;:title,&#10;    &#34;category&#34;:categories.title,&#10;    &#34;recordTimestamp&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveStart&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveEnd&#34;: $sort(geometry.date)[$count(geometry.date)-1],&#10;    &#34;source&#34;: sources.id &#38; &#34; &#34; &#38; sources.url,&#10;    &#34;operationsEventDefinition&#34;: {&#10;        &#34;id&#34;: &#34;Earth event&#34;,&#10;        &#34;label&#34;: &#34;Earth event&#34;&#10;        }&#10;    }&#10;&#10;    : {&#34;message&#34;:&#34;No earth events lately&#34;}&#10;&#10;)&#10;" target="responseTransformExpression" />
+          <zeebe:input source="1000000000" target="maxPayloadSize" />
+          <zeebe:input source="(&#10;$count(events[0]) &#62; 0&#10;&#10;    ? events.{&#10;    &#34;id&#34;: &#34;hello_&#34; &#38; id,&#10;    &#34;description&#34;:title,&#10;    &#34;category&#34;:categories.title,&#10;    &#34;recordTimestamp&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveStart&#34;: $sort(geometry.date)[0],&#10;    &#34;effectiveEnd&#34;: $sort(geometry.date)[$count(geometry.date)-1],&#10;    &#34;source&#34;: sources.id &#38; &#34; &#34; &#38; sources.url,&#10;    &#34;operationsEventDefinition&#34;: {&#10;        &#34;id&#34;: &#34;Earth event&#34;,&#10;        &#34;label&#34;: &#34;Earth event&#34;&#10;        }&#10;    }&#10;&#10;    : {&#34;message&#34;:&#34;No earth events lately&#34;}&#10;&#10;)&#10;" target="responseTransformExpression" />
           <zeebe:input source="true" target="tls-verification" />
           <zeebe:output source="= response" target="REST_GET_earthEvents" />
         </zeebe:ioMapping>
@@ -26,7 +26,7 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="graphql-mutation" />
         <zeebe:ioMapping>
-          <zeebe:input source="mutation AddOperationsEvent($input: [AddOperationsEventInput!]!) {&#10;  addOperationsEvent(input: $input) {&#10;    operationsEvent {&#10;      id&#10;      source&#10;    }&#10;  }&#10;}" target="query" />
+          <zeebe:input source="mutation AddOperationsEvent($input: [AddOperationsEventInput!]!) {&#10;  addOperationsEvent(input: $input) {&#10;      numUids&#10;    operationsEvent {&#10;      id&#10;      source&#10;    }&#10;  }&#10;}" target="query" />
           <zeebe:input source="={&#10;  &#34;upsert&#34;: true,&#10;  &#34;input&#34;: $.REST_GET_earthEvents&#10;}" target="variables" />
           <zeebe:input source="20000" target="timeout" />
           <zeebe:input source="1000000" target="maxPayloadSize" />
@@ -38,40 +38,41 @@
       <bpmn:outgoing>Flow_1rdrpk9</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1lnt649">
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_1rdrpk9</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1rdrpk9" sourceRef="M_addOperationsEvents" targetRef="Event_1lnt649" />
-    <bpmn:sequenceFlow id="Flow_1cycznb" name="variable" sourceRef="REST_GET_earthEvents" targetRef="M_addOperationsEvents" />
+    <bpmn:sequenceFlow id="Flow_1cycznb" name="transformed response" sourceRef="REST_GET_earthEvents" targetRef="M_addOperationsEvents" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="API_restToS95">
       <bpmndi:BPMNShape id="Event_0lsohis_di" bpmnElement="Event_0lsohis">
-        <dc:Bounds x="162" y="52" width="36" height="36" />
+        <dc:Bounds x="162" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0n4c93t_di" bpmnElement="REST_GET_earthEvents">
-        <dc:Bounds x="330" y="30" width="100" height="80" />
+        <dc:Bounds x="330" y="40" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h96tak_di" bpmnElement="M_addOperationsEvents">
-        <dc:Bounds x="630" y="20" width="100" height="80" />
+        <dc:Bounds x="630" y="30" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1lnt649_di" bpmnElement="Event_1lnt649">
-        <dc:Bounds x="862" y="52" width="36" height="36" />
+        <dc:Bounds x="862" y="62" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1p1xzy7_di" bpmnElement="Flow_1p1xzy7">
-        <di:waypoint x="198" y="70" />
-        <di:waypoint x="330" y="70" />
+        <di:waypoint x="198" y="80" />
+        <di:waypoint x="330" y="80" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1rdrpk9_di" bpmnElement="Flow_1rdrpk9">
-        <di:waypoint x="730" y="70" />
-        <di:waypoint x="862" y="70" />
+        <di:waypoint x="730" y="80" />
+        <di:waypoint x="862" y="80" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1cycznb_di" bpmnElement="Flow_1cycznb">
-        <di:waypoint x="430" y="70" />
-        <di:waypoint x="630" y="70" />
+        <di:waypoint x="430" y="80" />
+        <di:waypoint x="630" y="80" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="509" y="52" width="43" height="14" />
+          <dc:Bounds x="485" y="86" width="69" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
