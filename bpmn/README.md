@@ -1,9 +1,5 @@
 # BPMN Templates
 
-Templates that you can use for [Rhize](https://docs.rhize.com).
-
-- [BPMN](./bpmn)
-
 ## Contribute
 
 1. Follow the [naming conventions](https://docs.rhize.com/how-to/bpmn/naming-conventions) in your workflow.
