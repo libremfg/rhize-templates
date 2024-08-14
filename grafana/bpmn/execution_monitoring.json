@@ -1,0 +1,711 @@
+{
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"target": {
+					"limit": 100,
+					"matchAny": false,
+					"tags": [],
+					"type": "dashboard"
+				},
+				"type": "dashboard"
+			}
+		]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"id": null,
+	"links": [
+		{
+			"asDropdown": false,
+			"icon": "external link",
+			"includeVars": false,
+			"keepTime": false,
+			"tags": [
+				"BPMN"
+			],
+			"targetBlank": false,
+			"title": "BPMN",
+			"tooltip": "",
+			"type": "dashboards",
+			"url": ""
+		}
+	],
+	"liveNow": false,
+	"panels": [
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 9,
+				"w": 12,
+				"x": 0,
+				"y": 0
+			},
+			"id": 2,
+			"interval": "2m",
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"disableTextWrap": false,
+					"editorMode": "builder",
+					"expr": "rate(bpmn_execution_commands[$__rate_interval])",
+					"fullMetaSearch": false,
+					"hide": false,
+					"includeNullMetadata": false,
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "A",
+					"useBackend": false
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "code",
+					"expr": "sum(rate(bpmn_execution_commands[$__rate_interval]))",
+					"hide": false,
+					"legendFormat": "total",
+					"range": true,
+					"refId": "B"
+				}
+			],
+			"title": "BPMN commands (nodes) executed",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 9,
+				"w": 12,
+				"x": 12,
+				"y": 0
+			},
+			"id": 4,
+			"interval": "2m",
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "builder",
+					"expr": "rate(bpmn_instances_started[$__rate_interval])",
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "code",
+					"expr": "sum(rate(bpmn_instances_started[$__rate_interval]))",
+					"hide": false,
+					"legendFormat": "total",
+					"range": true,
+					"refId": "B"
+				}
+			],
+			"title": "BPMN Instances (processes) Started",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 0,
+				"y": 9
+			},
+			"id": 6,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "builder",
+					"expr": "bpmn_queue_CommandConsumerQueue",
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "A"
+				}
+			],
+			"title": "Command Consumer Queue Size",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 12,
+				"y": 9
+			},
+			"id": 8,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "builder",
+					"expr": "bpmn_queue_StartOnNatsMessages",
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "A"
+				}
+			],
+			"title": "Start on NATS Queue Size",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 0,
+				"y": 17
+			},
+			"id": 14,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "builder",
+					"expr": "go_goroutines{instance=~\".*bpmn.*\"}",
+					"legendFormat": "__auto",
+					"range": true,
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "builder",
+					"expr": "go_goroutines{instance=~\".*core.*\"}",
+					"hide": false,
+					"legendFormat": "__auto",
+					"range": true,
+					"refId": "B"
+				}
+			],
+			"title": "BPMN Engine Goroutines",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${datasource}"
+			},
+			"description": "This is built for alerting, if it is every < 0 BPMN is failing to execute nodes on instances that have been created.",
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "auto",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "off"
+						}
+					},
+					"mappings": [],
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 80
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 12,
+				"y": 17
+			},
+			"id": 12,
+			"interval": "60s",
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "9.4.7",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "code",
+					"expr": "irate(bpmn_execution_commands[2m])",
+					"hide": true,
+					"interval": "2m",
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "A"
+				},
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${datasource}"
+					},
+					"editorMode": "code",
+					"expr": "irate(bpmn_instances_started[2m])",
+					"hide": true,
+					"interval": "2m",
+					"legendFormat": "{{pod}}",
+					"range": true,
+					"refId": "B"
+				},
+				{
+					"datasource": {
+						"name": "Expression",
+						"type": "__expr__",
+						"uid": "__expr__"
+					},
+					"expression": "$A - $B",
+					"hide": false,
+					"refId": "C",
+					"type": "math"
+				}
+			],
+			"title": "Commands - Instances",
+			"type": "timeseries"
+		}
+	],
+	"refresh": "",
+	"revision": 1,
+	"schemaVersion": 38,
+	"style": "dark",
+	"tags": [
+		"BPMN"
+	],
+	"templating": {
+		"list": [
+			{
+				"current": {
+					"selected": false,
+					"text": "Prometheus",
+					"value": "Prometheus"
+				},
+				"hide": 0,
+				"includeAll": false,
+				"label": "Datasource",
+				"multi": false,
+				"name": "datasource",
+				"options": [],
+				"query": "prometheus",
+				"queryValue": "",
+				"refresh": 1,
+				"regex": "",
+				"skipUrlSync": false,
+				"type": "datasource"
+			}
+		]
+	},
+	"time": {
+		"from": "now-15m",
+		"to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "BPMN Execution Monitoring",
+	"version": 1,
+	"weekStart": ""
+}
