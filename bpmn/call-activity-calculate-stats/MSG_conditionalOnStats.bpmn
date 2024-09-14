@@ -37,8 +37,8 @@
       <bpmn:outgoing>Flow_0h1z46x</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_148u002" messageRef="Message_1jisf8s" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:sequenceFlow id="Flow_05p5wm4" name="Mode exceeds 200" sourceRef="Gateway_1fx8lse" targetRef="MSG_statsAbnormal">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$.stats.mode &gt; 200</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_05p5wm4" name="Max exceeds 200" sourceRef="Gateway_1fx8lse" targetRef="MSG_statsAbnormal">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">$.stats.max &gt; 200</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:intermediateThrowEvent id="MSG_statsAbnormal">
       <bpmn:extensionElements>

@@ -13,7 +13,7 @@
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="jsonata" />
         <zeebe:ioMapping>
-          <zeebe:input source="=(&#10;  $sorted := $sort($.arr);&#10;  $length := $count($.arr);&#10;  $mid := $floor($length/2);&#10;  $length % 2 = 0&#10;    ? $median := ($sorted[$mid-1] + $sorted[$mid]) /2&#10;    : $median := $sorted[$mid];&#10;&#10;&#10;{&#10;    &#34;sum&#34;:$sum($.arr),&#10;    &#34;mode&#34;: $max($.arr),&#10;    &#34;mean&#34;: $average($.arr),&#10;    &#34;median&#34;: $median&#10;}&#10;&#10;)" target="input" />
+          <zeebe:input source="=(&#10;  $sorted := $sort($.arr);&#10;  $length := $count($.arr);&#10;  $mid := $floor($length/2);&#10;  $length % 2 = 0&#10;    ? $median := ($sorted[$mid-1] + $sorted[$mid]) /2&#10;    : $median := $sorted[$mid];&#10;&#10;&#10;{&#10;    &#34;sum&#34;:$sum($.arr),&#10;    &#34;max&#34;: $max($.arr),&#10;    &#34;mean&#34;: $average($.arr),&#10;    &#34;median&#34;: $median&#10;}&#10;&#10;)" target="input" />
           <zeebe:input source="$" target="transform" />
           <zeebe:input source="10000" target="maxPayloadSize" />
           <zeebe:output source="= response" target="customResponse" />
