@@ -3,6 +3,8 @@
 Templates that you can use for [Rhize](https://docs.rhize.com).
 
 - [BPMN](./bpmn)
+- [Data science](./data-science)
+- [ISA-95 mapping](./isa-95-mapping)
 
 ## Contribute
 
