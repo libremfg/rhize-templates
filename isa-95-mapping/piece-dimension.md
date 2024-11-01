@@ -49,30 +49,22 @@ From these assumptions, we can create an ISA-95 model.
 ### Transform expression
 
 Input:
+
 ```json
-[
   {
     "Item_No": 1,
     "Length": 102.67,
     "Width": 49.53,
     "Height": 19.69,
     "Operator": "Op-1"
-  },
-  {
-    "Item_No": 2,
-    "Length": 102.5,
-    "Width": 51.42,
-    "Height": 19.63,
-    "Operator": "Op-1"
   }
-]
 ```
 
 Transform expression. Optionally, add a `$prefix` string to make the operation identifiable.
 
 ```jsonata
 (
-$prefix := "";
+$prefix := "20241101.c.";
 
 
 $.{
@@ -80,8 +72,8 @@ $.{
     "personnelActual":{
         "id": Item_No & "." & Operator,
         "person":{
-            "id": Operator,
-            "label": Operator
+            "id": $prefix & Operator,
+            "label": $prefix & Operator
         }
     },
     "materialActual":[
@@ -89,34 +81,25 @@ $.{
             "id": $prefix & Item_No & ".Prod",
             "materialUse": "Produced",
             "materialSubLot": {
-                "id": $prefix & Item_No
-            },
-            "properties":[
-                {
-                "materialLotProperty":{
-                    "id": "length"
-                },
-                "id": $prefix & Item_No & ".length",
-                "label": "Length",
-                "quantity": Length
-                },
-                {
-                "materialLotProperty":{
-                    "id": "height"
-                },
-                "id": $prefix & Item_No & ".height",
-                "label": "Height",
-                "quantity": Height
-                },
-                {
-                "materialLotProperty":{
-                    "id": "width"
-                },
-                "id": $prefix & Item_No & ".width",
-                "label": "Width",
-                "quantity": Width
-                }
+                "id": $prefix & Item_No,
+                "properties":[
+                     {
+                     "id": $prefix & Item_No & ".length",
+                     "label": "Length",
+                     "value": $string(Length)
+                     },
+                     {
+                     "id": $prefix & Item_No & ".height",
+                     "label": "Height",
+                     "value": $string(Height)
+                     },
+                     {
+                     "id": $prefix & Item_No & ".width",
+                     "label": "Width",
+                     "value": $string(Width)
+                     }
             ]
+            }
         }
     ]
 }
@@ -127,98 +110,42 @@ Output:
 
 
 ```json
-[
-  {
-    "id": "1",
-    "personnelActual": {
-      "id": "1.Op-1",
-      "person": {
-        "id": "Op-1",
-        "label": "Op-1"
-      }
-    },
-    "materialActual": [
-      {
-        "id": "1.Prod",
-        "materialUse": "Produced",
-        "materialSubLot": {
-          "id": "1"
-        },
-        "properties": [
-          {
-            "materialLotProperty": {
-              "id": "length"
-            },
-            "id": "1.length",
-            "label": "Length",
-            "quantity": 102.67
-          },
-          {
-            "materialLotProperty": {
-              "id": "height"
-            },
-            "id": "1.height",
-            "label": "Height",
-            "quantity": 19.69
-          },
-          {
-            "materialLotProperty": {
-              "id": "width"
-            },
-            "id": "1.width",
-            "label": "Width",
-            "quantity": 49.53
-          }
-        ]
-      }
-    ]
+{
+  "id": "20241101.c.1",
+  "personnelActual": {
+    "id": "1.Op-1",
+    "person": {
+      "id": "20241101.c.Op-1",
+      "label": "20241101.c.Op-1"
+    }
   },
-  {
-    "id": "2",
-    "personnelActual": {
-      "id": "2.Op-1",
-      "person": {
-        "id": "Op-1",
-        "label": "Op-1"
-      }
-    },
-    "materialActual": [
-      {
-        "id": "2.Prod",
-        "materialUse": "Produced",
-        "materialSubLot": {
-          "id": "2"
-        },
+  "materialActual": [
+    {
+      "id": "20241101.c.1.Prod",
+      "materialUse": "Produced",
+      "materialSubLot": {
+        "id": "20241101.c.1",
         "properties": [
           {
-            "materialLotProperty": {
-              "id": "length"
-            },
-            "id": "2.length",
+            "id": "20241101.c.1.length",
             "label": "Length",
-            "quantity": 102.5
+            "value": "102.67"
           },
           {
-            "materialLotProperty": {
-              "id": "height"
-            },
-            "id": "2.height",
+            "id": "20241101.c.1.height",
             "label": "Height",
-            "quantity": 19.63
+            "value": "19.69"
           },
           {
-            "materialLotProperty": {
-              "id": "width"
-            },
-            "id": "2.width",
+            "id": "20241101.c.1.width",
             "label": "Width",
-            "quantity": 51.42
+            "value": "49.53"
           }
         ]
       }
-    ]
-  }
-]
+    }
+  ]
+}
 ```
 
 ## Integrate data through BPMN workflow
@@ -251,7 +178,7 @@ query{
     }
   }
 }
-``
+```
 
 You can also query associated properties.
 For example, you can query the Person to find all associated job responses, produced material, and measurements:
@@ -553,11 +480,10 @@ Output:
 
 ## Integrate data through BPMN workflow
 
-You could use this JSONata expression with a mutation in a BPMN workflow.
-This way, the data gets standardized as it arrives.
+You could use the preceding JSONata expression with a mutation in a BPMN workflow,
+then set up a [Trigger](https://docs.rhize.com/how-to/bpmn/trigger-workflows/) so that the data gets standardized automatically as it arrives.
 
-In a real operation, these values might come in one at a time.
-This workflow is triggered by a message on the message queue.
+The trigger might be input data from the operator, OPC-UA tag values, or an MQTT message to a topic on a data source or the Rhize broker.
 
 ## Query the data
 
