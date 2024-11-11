@@ -109,6 +109,11 @@ The only implied fields are:
 
   This transformation assumes that the version of each of these objects is `"1"`.
 
+## Example transformation
+
+Here is an example of a transformation from a two-row sample.
+
+
 <details>
   
 <summary>Input JSON</summary>
