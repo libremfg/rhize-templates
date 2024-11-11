@@ -47,16 +47,67 @@ FROM (DESCRIBE SELECT * FROM 'brewery_data_complete_extended.csv');
 
 Sales data is out of scope for ISA-95, but all these other properties fit into the model.
 
-Since brewing, fermentaion, and bottling all have their own loss parameters, we are going to separate these processes into child job responses.
+Two fields have a small set of unique values:
 
-## Example: Expression with material actual properties
+```
+ SELECT DISTINCT beer_style from t;
+```
+
+```
+┌────────────┐
+│ Beer_Style │
+│  varchar   │
+├────────────┤
+│ Lager      │
+│ Stout      │
+│ Sour       │
+│ IPA        │
+│ Pilsner    │
+│ Wheat Beer │
+│ Porter     │
+│ Ale        │
+└────────────┘
+```
+
+```SQL
+SELECT DISTINCT Location from t;
+```
+
+```
+
+┌─────────────────┐
+│    Location     │
+│     varchar     │
+├─────────────────┤
+│ Jayanagar       │
+│ Rajajinagar     │
+│ HSR Layout      │
+│ Marathahalli    │
+│ Indiranagar     │
+│ Koramangala     │
+│ Whitefield      │
+│ Malleswaram     │
+│ Yelahanka       │
+│ Electronic City │
+├─────────────────┤
+│     10 rows     │
+└─────────────────┘
+```
+
+## Map data to ISA-95
 
 
-This expression maps as closely as possible to the dataset.
-The only implied fields are the top-level job response object, which is the smallest unit of work in ISA-95.
+The following transformation expression maps the source dataset to ISA-95.
+While the expression adds context and relationships, it also tries to avoid unnecessary inferences.
 
 
+The only implied fields are:
+- The job responses. As the job response is the smallest unit of work in ISA-95, a job response object is necessary to create a container for a batch performance.
 
+  Since brewing, fermentation, and bottling all have their own loss parameters, we are going to separate these processes into child job responses.
+- Material definitions and equipment ids. The `Beer_Style` and `Location` fields have the same fields across 10 million rows. This transformation assumes that these refer to shared objects. So each `Beer_Style` gets a material definition and each location maps to an equipment area.
+
+  This transformation assumes that the version of each of these objects is `"1"`.
 
 <details>
   
@@ -65,48 +116,48 @@ The only implied fields are the top-level job response object, which is the smal
 ```json
 [
   {
-    "Batch_ID": "7870796",
-    "Brew_Date": "2020-01-01 00:00:19",
-    "Beer_Style": "Wheat Beer",
-    "SKU": "Kegs",
-    "Location": "Whitefield",
-    "Fermentation_Time": 16,
-    "Temperature": 24.204250857069873,
-    "pH_Level": 5.2898454476095615,
-    "Gravity": 1.0395041267301979,
-    "Alcohol_Content": 5.370842159553436,
-    "Bitterness": 20,
+    "Batch_ID": "0004038",
+    "Brew_Date": "2020-01-01 00:07:27",
+    "Beer_Style": "Lager",
+    "SKU": "Cans",
+    "Location": "Rajajinagar",
+    "Fermentation_Time": 17,
+    "Temperature": 17.122159957506383,
+    "pH_Level": 5.1991104812087,
+    "Gravity": 1.0411437419707774,
+    "Alcohol_Content": 5.946134604849364,
+    "Bitterness": 33,
     "Color": 5,
-    "Ingredient_Ratio": "1:0.32:0.16",   
-    "Volume_Produced": 4666,
-    "Total_Sales": 2664.7593448382822,
-    "Quality_Score": 8.57701633109399,
-    "Brewhouse_Efficiency": 89.19588216376087,
-    "Loss_During_Brewing": 4.1049876591878345,
-    "Loss_During_Fermentation": 3.2354851724654683,
-    "Loss_During_Bottling_Kegging": 4.663204448186049
+    "Ingredient_Ratio": "1:0.21:0.18",
+    "Volume_Produced": 3320,
+    "Total_Sales": 17591.943665500272,
+    "Quality_Score": 9.591767047394432,
+    "Brewhouse_Efficiency": 82.12133297547287,
+    "Loss_During_Brewing": 4.384337331071963,
+    "Loss_During_Fermentation": 4.204139512963197,
+    "Loss_During_Bottling_Kegging": 3.6211740792630325
   },
   {
-    "Batch_ID": "9810411",
-    "Brew_Date": "2020-01-01 00:00:31",
-    "Beer_Style": "Sour",
+    "Batch_ID": "3886278",
+    "Brew_Date": "2020-01-01 00:07:35",
+    "Beer_Style": "Lager",
     "SKU": "Kegs",
-    "Location": "Whitefield",
-    "Fermentation_Time": 13,
-    "Temperature": 18.086762947259544,
-    "pH_Level": 5.275643382756193,
-    "Gravity": 1.0598189516987164,
-    "Alcohol_Content": 5.096053082797625,
-    "Bitterness": 36,
-    "Color": 14,
-    "Ingredient_Ratio": "1:0.39:0.24",
-    "Volume_Produced": 832,
-    "Total_Sales": 9758.801062471319,
-    "Quality_Score": 7.420540752553908,
-    "Brewhouse_Efficiency": 72.4809153900275,
-    "Loss_During_Brewing": 2.6765280953921122,
-    "Loss_During_Fermentation": 4.2461292104108574,
-    "Loss_During_Bottling_Kegging": 2.04435836917023
+    "Location": "Jayanagar",
+    "Fermentation_Time": 15,
+    "Temperature": 18.619302931119375,
+    "pH_Level": 4.53287889755344,
+    "Gravity": 1.03411721040703,
+    "Alcohol_Content": 5.863576331843152,
+    "Bitterness": 48,
+    "Color": 15,
+    "Ingredient_Ratio": "1:0.36:0.24",
+    "Volume_Produced": 3599,
+    "Total_Sales": 16420.496759132024,
+    "Quality_Score": 7.87839585495581,
+    "Brewhouse_Efficiency": 83.04968700310678,
+    "Loss_During_Brewing": 3.553205213034005,
+    "Loss_During_Fermentation": 2.7030556858591464,
+    "Loss_During_Bottling_Kegging": 1.7366887369684196
   }
 ]
 ```
@@ -123,6 +174,9 @@ The only implied fields are the top-level job response object, which is the smal
 
 ```jsonata
 (
+  /* use for identifiable prefix */
+  $prefix := "MY_PREFIX.A.1" ;
+
   $payload := $map(
     $,
     function(
@@ -130,38 +184,33 @@ The only implied fields are the top-level job response object, which is the smal
       $i
     ) {
       (
-        $id := "PREFIX." & $v.Batch_ID;
-        $makeJrData := function(
+        $id := $prefix & "." & $v.Batch_ID;
+        $makeProp := function(
           $key,
           $description
         ) {
-          { "id": $id & "." & $key,
-          "label": $string($key),
-          "value": $string($lookup($key)[$i]),
-          "description": $description }
+          { "id": $id & "." & $key, "label": $string($key), "value": $string($lookup($key)[$i]), "description": $description }
         };
-         $makeProp := function(
-          $key,
-          $description
-        ) {
-          { "id": $id & "." & $key,
-          "label": $string($key),
-          "quantity": $type($lookup($key)[$i]) = "string" ? null : $lookup($key)[$i],
-          "value": $string($lookup($key)[$i]),
-          "description": $description }
-        };
-
         {
           "id": $id,
-          "equipmentActual": [{ "id": $id &  "." & $v.Location }],
+          "equipmentActual": [
+            {
+              "id": $id & "." & $v.Location,
+              "equipmentVersion": {
+                 "id": $v.Location,
+                  "version": "1"
+          }
+            
+            }
+            ],
           "children": [
             {
               "id": $id & ".brew",
               "description": "brewing",
               "startDateTime": $replace($v.Brew_Date, " ", "T"),
               "data": [
-                $makeJrData("Loss_During_Brewing", ""),
-                $makeJrData("Temperature", "The average temperature (in Celsius) maintained during the brewing process.")
+                $makeProp("Loss_During_Brewing", ""),
+                $makeProp("Temperature", "The average temperature (in Celsius) maintained during the brewing process.")
               ]
             },
             {
@@ -180,16 +229,28 @@ The only implied fields are the top-level job response object, which is the smal
           ],
           "materialActual": {
             "id": $id & ".prod",
-            "quantity": $v.Volume_Produced,
-            /* "quanitityUnitOfMeasure": { "id": "liters" }, */
-            "properties": [
-              $makeProp("pH_Level", "The pH level of the beer, indicating its acidity or alkalinity."),
-              $makeProp("Gravity", "A measure of the density of the beer as compared to water, indicating the potential alcohol content."),
-              $makeProp("Alcohol_Content", "The percentage of alcohol by volume in the beer."),
-              $makeProp("Bitterness", "The bitterness of the beer, measured in International Bitterness Units (IBU)."),
-              $makeProp("Color", "The color of the beer measured using the Standard Reference Method (SRM)."),
-              $makeProp("Ingredient_Ratio", "The ratio ingredients as water : grains: hops."),
-              $makeProp("Quality_Score", "An overall quality score assigned to the beer batch, rated out of 10.")
+            "materialLot": [
+              {
+                "id": $id,
+                "quantity": $v.Volume_Produced,
+                "quantityUnitOfMeasure": { "id": "liters" },
+                "materialDefinition": { "id": $v.Beer_Style, "label": $v.Beer_Style },
+                "materialDefinitionVersion": {
+                  "id": $v.Beer_Style,
+                  "version": "1",
+                  "versionStatus": "ACTIVE",
+                  "materialDefinition": { "id": $v.Beer_Style & "whatIfDefNoExist", "label": $v.Beer_Style & "whatIfDefNoExist" }
+                },
+                "properties": [
+                  $makeProp("pH_Level", "The pH level of the beer, indicating its acidity or alkalinity."),
+                  $makeProp("Gravity", "A measure of the density of the beer as compared to water, indicating the potential alcohol content."),
+                  $makeProp("Alcohol_Content", "The percentage of alcohol by volume in the beer."),
+                  $makeProp("Bitterness", "The bitterness of the beer, measured in International Bitterness Units (IBU)."),
+                  $makeProp("Color", "The color of the beer measured using the Standard Reference Method (SRM)."),
+                  $makeProp("Ingredient_Ratio", "The ratio ingredients as water : grains: hops."),
+                  $makeProp("Quality_Score", "An overall quality score assigned to the beer batch, rated out of 10.")
+                ]
+              }
             ]
           }
         }
@@ -211,244 +272,275 @@ The only implied fields are the top-level job response object, which is the smal
   "upsert": true,
   "input": [
     {
-      "id": "PREFIX.7870796",
+      "id": "MY_PREFIX.A.1.0004038",
       "equipmentActual": [
         {
-          "id": "PREFIX.7870796.Whitefield"
+          "id": "MY_PREFIX.A.1.0004038.Rajajinagar",
+          "equipmentVersion": {
+            "id": "Rajajinagar",
+            "version": "1"
+          }
         }
       ],
       "children": [
         {
-          "id": "PREFIX.7870796.brew",
+          "id": "MY_PREFIX.A.1.0004038.brew",
           "description": "brewing",
-          "startDateTime": "2020-01-01T00:00:19",
+          "startDateTime": "2020-01-01T00:07:27",
           "data": [
             {
-              "id": "PREFIX.7870796.Loss_During_Brewing",
+              "id": "MY_PREFIX.A.1.0004038.Loss_During_Brewing",
               "label": "Loss_During_Brewing",
-              "value": "4.10498765918783",
+              "value": "4.38433733107196",
               "description": ""
             },
             {
-              "id": "PREFIX.7870796.Temperature",
+              "id": "MY_PREFIX.A.1.0004038.Temperature",
               "label": "Temperature",
-              "value": "24.2042508570699",
+              "value": "17.1221599575064",
               "description": "The average temperature (in Celsius) maintained during the brewing process."
             }
           ]
         },
         {
-          "id": "PREFIX.7870796.fermentation",
+          "id": "MY_PREFIX.A.1.0004038.fermentation",
           "description": "fermentation",
           "data": [
             {
-              "id": "PREFIX.7870796.Loss_During_Fermentation",
+              "id": "MY_PREFIX.A.1.0004038.Loss_During_Fermentation",
               "label": "Loss_During_Fermentation",
-              "quantity": 3.2354851724654683,
-              "value": "3.23548517246547",
+              "value": "4.2041395129632",
               "description": "The percentage of volume loss during the fermentation process."
             },
             {
-              "id": "PREFIX.7870796.Fermentation_Time",
+              "id": "MY_PREFIX.A.1.0004038.Fermentation_Time",
               "label": "Fermentation_Time",
-              "quantity": 16,
-              "value": "16",
+              "value": "17",
               "description": "The average temperature (in Celsius) maintained during the brewing process."
             }
           ]
         },
         {
-          "id": "PREFIX.7870796.bottling",
+          "id": "MY_PREFIX.A.1.0004038.bottling",
           "description": "bottling",
           "data": [
             {
-              "id": "PREFIX.7870796.Loss_During_Bottling_Kegging",
+              "id": "MY_PREFIX.A.1.0004038.Loss_During_Bottling_Kegging",
               "label": "Loss_During_Bottling_Kegging",
-              "quantity": 4.663204448186049,
-              "value": "4.66320444818605",
+              "value": "3.62117407926303",
               "description": ""
             }
           ]
         }
       ],
       "materialActual": {
-        "id": "PREFIX.7870796.prod",
-        "quantity": 4666,
-        "properties": [
+        "id": "MY_PREFIX.A.1.0004038.prod",
+        "materialLot": [
           {
-            "id": "PREFIX.7870796.pH_Level",
-            "label": "pH_Level",
-            "quantity": 5.2898454476095615,
-            "value": "5.28984544760956",
-            "description": "The pH level of the beer, indicating its acidity or alkalinity."
-          },
-          {
-            "id": "PREFIX.7870796.Gravity",
-            "label": "Gravity",
-            "quantity": 1.0395041267301979,
-            "value": "1.0395041267302",
-            "description": "A measure of the density of the beer as compared to water, indicating the potential alcohol content."
-          },
-          {
-            "id": "PREFIX.7870796.Alcohol_Content",
-            "label": "Alcohol_Content",
-            "quantity": 5.370842159553436,
-            "value": "5.37084215955344",
-            "description": "The percentage of alcohol by volume in the beer."
-          },
-          {
-            "id": "PREFIX.7870796.Bitterness",
-            "label": "Bitterness",
-            "quantity": 20,
-            "value": "20",
-            "description": "The bitterness of the beer, measured in International Bitterness Units (IBU)."
-          },
-          {
-            "id": "PREFIX.7870796.Color",
-            "label": "Color",
-            "quantity": 5,
-            "value": "5",
-            "description": "The color of the beer measured using the Standard Reference Method (SRM)."
-          },
-          {
-            "id": "PREFIX.7870796.Ingredient_Ratio",
-            "label": "Ingredient_Ratio",
-            "quantity": null,
-            "value": "1:0.32:0.16",
-            "description": "The ratio ingredients as water : grains: hops."
-          },
-          {
-            "id": "PREFIX.7870796.Quality_Score",
-            "label": "Quality_Score",
-            "quantity": 8.57701633109399,
-            "value": "8.57701633109399",
-            "description": "An overall quality score assigned to the beer batch, rated out of 10."
+            "id": "MY_PREFIX.A.1.0004038",
+            "quantity": 3320,
+            "quantityUnitOfMeasure": {
+              "id": "liters"
+            },
+            "materialDefinition": {
+              "id": "Lager",
+              "label": "Lager"
+            },
+            "materialDefinitionVersion": {
+              "id": "Lager",
+              "version": "1",
+              "versionStatus": "ACTIVE",
+              "materialDefinition": {
+                "id": "LagerwhatIfDefNoExist",
+                "label": "LagerwhatIfDefNoExist"
+              }
+            },
+            "properties": [
+              {
+                "id": "MY_PREFIX.A.1.0004038.pH_Level",
+                "label": "pH_Level",
+                "value": "5.1991104812087",
+                "description": "The pH level of the beer, indicating its acidity or alkalinity."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Gravity",
+                "label": "Gravity",
+                "value": "1.04114374197078",
+                "description": "A measure of the density of the beer as compared to water, indicating the potential alcohol content."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Alcohol_Content",
+                "label": "Alcohol_Content",
+                "value": "5.94613460484936",
+                "description": "The percentage of alcohol by volume in the beer."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Bitterness",
+                "label": "Bitterness",
+                "value": "33",
+                "description": "The bitterness of the beer, measured in International Bitterness Units (IBU)."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Color",
+                "label": "Color",
+                "value": "5",
+                "description": "The color of the beer measured using the Standard Reference Method (SRM)."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Ingredient_Ratio",
+                "label": "Ingredient_Ratio",
+                "value": "1:0.21:0.18",
+                "description": "The ratio ingredients as water : grains: hops."
+              },
+              {
+                "id": "MY_PREFIX.A.1.0004038.Quality_Score",
+                "label": "Quality_Score",
+                "value": "9.59176704739443",
+                "description": "An overall quality score assigned to the beer batch, rated out of 10."
+              }
+            ]
           }
         ]
       }
     },
     {
-      "id": "PREFIX.9810411",
+      "id": "MY_PREFIX.A.1.3886278",
       "equipmentActual": [
         {
-          "id": "PREFIX.9810411.Whitefield"
+          "id": "MY_PREFIX.A.1.3886278.Jayanagar",
+          "equipmentVersion": {
+            "id": "Jayanagar",
+            "version": "1"
+          }
         }
       ],
       "children": [
         {
-          "id": "PREFIX.9810411.brew",
+          "id": "MY_PREFIX.A.1.3886278.brew",
           "description": "brewing",
-          "startDateTime": "2020-01-01T00:00:31",
+          "startDateTime": "2020-01-01T00:07:35",
           "data": [
             {
-              "id": "PREFIX.9810411.Loss_During_Brewing",
+              "id": "MY_PREFIX.A.1.3886278.Loss_During_Brewing",
               "label": "Loss_During_Brewing",
-              "value": "2.67652809539211",
+              "value": "3.553205213034",
               "description": ""
             },
             {
-              "id": "PREFIX.9810411.Temperature",
+              "id": "MY_PREFIX.A.1.3886278.Temperature",
               "label": "Temperature",
-              "value": "18.0867629472595",
+              "value": "18.6193029311194",
               "description": "The average temperature (in Celsius) maintained during the brewing process."
             }
           ]
         },
         {
-          "id": "PREFIX.9810411.fermentation",
+          "id": "MY_PREFIX.A.1.3886278.fermentation",
           "description": "fermentation",
           "data": [
             {
-              "id": "PREFIX.9810411.Loss_During_Fermentation",
+              "id": "MY_PREFIX.A.1.3886278.Loss_During_Fermentation",
               "label": "Loss_During_Fermentation",
-              "quantity": 4.2461292104108574,
-              "value": "4.24612921041086",
+              "value": "2.70305568585915",
               "description": "The percentage of volume loss during the fermentation process."
             },
             {
-              "id": "PREFIX.9810411.Fermentation_Time",
+              "id": "MY_PREFIX.A.1.3886278.Fermentation_Time",
               "label": "Fermentation_Time",
-              "quantity": 13,
-              "value": "13",
+              "value": "15",
               "description": "The average temperature (in Celsius) maintained during the brewing process."
             }
           ]
         },
         {
-          "id": "PREFIX.9810411.bottling",
+          "id": "MY_PREFIX.A.1.3886278.bottling",
           "description": "bottling",
           "data": [
             {
-              "id": "PREFIX.9810411.Loss_During_Bottling_Kegging",
+              "id": "MY_PREFIX.A.1.3886278.Loss_During_Bottling_Kegging",
               "label": "Loss_During_Bottling_Kegging",
-              "quantity": 2.04435836917023,
-              "value": "2.04435836917023",
+              "value": "1.73668873696842",
               "description": ""
             }
           ]
         }
       ],
       "materialActual": {
-        "id": "PREFIX.9810411.prod",
-        "quantity": 832,
-        "properties": [
+        "id": "MY_PREFIX.A.1.3886278.prod",
+        "materialLot": [
           {
-            "id": "PREFIX.9810411.pH_Level",
-            "label": "pH_Level",
-            "quantity": 5.275643382756193,
-            "value": "5.27564338275619",
-            "description": "The pH level of the beer, indicating its acidity or alkalinity."
-          },
-          {
-            "id": "PREFIX.9810411.Gravity",
-            "label": "Gravity",
-            "quantity": 1.0598189516987164,
-            "value": "1.05981895169872",
-            "description": "A measure of the density of the beer as compared to water, indicating the potential alcohol content."
-          },
-          {
-            "id": "PREFIX.9810411.Alcohol_Content",
-            "label": "Alcohol_Content",
-            "quantity": 5.096053082797625,
-            "value": "5.09605308279763",
-            "description": "The percentage of alcohol by volume in the beer."
-          },
-          {
-            "id": "PREFIX.9810411.Bitterness",
-            "label": "Bitterness",
-            "quantity": 36,
-            "value": "36",
-            "description": "The bitterness of the beer, measured in International Bitterness Units (IBU)."
-          },
-          {
-            "id": "PREFIX.9810411.Color",
-            "label": "Color",
-            "quantity": 14,
-            "value": "14",
-            "description": "The color of the beer measured using the Standard Reference Method (SRM)."
-          },
-          {
-            "id": "PREFIX.9810411.Ingredient_Ratio",
-            "label": "Ingredient_Ratio",
-            "quantity": null,
-            "value": "1:0.39:0.24",
-            "description": "The ratio ingredients as water : grains: hops."
-          },
-          {
-            "id": "PREFIX.9810411.Quality_Score",
-            "label": "Quality_Score",
-            "quantity": 7.420540752553908,
-            "value": "7.42054075255391",
-            "description": "An overall quality score assigned to the beer batch, rated out of 10."
+            "id": "MY_PREFIX.A.1.3886278",
+            "quantity": 3599,
+            "quantityUnitOfMeasure": {
+              "id": "liters"
+            },
+            "materialDefinition": {
+              "id": "Lager",
+              "label": "Lager"
+            },
+            "materialDefinitionVersion": {
+              "id": "Lager",
+              "version": "1",
+              "versionStatus": "ACTIVE",
+              "materialDefinition": {
+                "id": "LagerwhatIfDefNoExist",
+                "label": "LagerwhatIfDefNoExist"
+              }
+            },
+            "properties": [
+              {
+                "id": "MY_PREFIX.A.1.3886278.pH_Level",
+                "label": "pH_Level",
+                "value": "4.53287889755344",
+                "description": "The pH level of the beer, indicating its acidity or alkalinity."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Gravity",
+                "label": "Gravity",
+                "value": "1.03411721040703",
+                "description": "A measure of the density of the beer as compared to water, indicating the potential alcohol content."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Alcohol_Content",
+                "label": "Alcohol_Content",
+                "value": "5.86357633184315",
+                "description": "The percentage of alcohol by volume in the beer."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Bitterness",
+                "label": "Bitterness",
+                "value": "48",
+                "description": "The bitterness of the beer, measured in International Bitterness Units (IBU)."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Color",
+                "label": "Color",
+                "value": "15",
+                "description": "The color of the beer measured using the Standard Reference Method (SRM)."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Ingredient_Ratio",
+                "label": "Ingredient_Ratio",
+                "value": "1:0.36:0.24",
+                "description": "The ratio ingredients as water : grains: hops."
+              },
+              {
+                "id": "MY_PREFIX.A.1.3886278.Quality_Score",
+                "label": "Quality_Score",
+                "value": "7.87839585495581",
+                "description": "An overall quality score assigned to the beer batch, rated out of 10."
+              }
+            ]
           }
         ]
       }
     }
   ]
 }
+
 ```
 </details>
 
 ## Extensions
 
-An extended version of this model may use material definitions, classes, and lots to categorize the material.
+An extended version of this model may use material classes to categorize the material and properties.
