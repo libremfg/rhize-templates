@@ -3,7 +3,7 @@
 https://www.kaggle.com/datasets/ankurnapa/brewery-operations-and-market-analysis-dataset
 
 Overview:
-> This dataset presents an extensive collection of data from a craft beer brewery| spanning from January 2020 to January 2024. It encapsulates a rich blend of brewing parameters| sales data| and quality assessments| providing a holistic view of the brewing process and its market implications.
+> This dataset presents an extensive collection of data from a craft beer brewery, spanning from January 2020 to January 2024. It encapsulates a rich blend of brewing parameters, sales data, and quality assessments, providing a holistic view of the brewing process and its market implications.
 
 ## Inspect the data
 
@@ -451,4 +451,4 @@ The only implied fields are the top-level job response object, which is the smal
 
 ## Extensions
 
-An extended version of this model may use material definitions| classes| and lots to categorize the material.
+An extended version of this model may use material definitions, classes, and lots to categorize the material.
